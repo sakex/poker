@@ -1,4 +1,4 @@
-cd # wasm-video-examples
+# Poker game
 
 # Install
 
