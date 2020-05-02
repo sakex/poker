@@ -212,7 +212,7 @@ export default class extends Component<PokerProps, StartedState> {
     };
 
     check = () => {
-        if (this.state.highestBet === 0) {
+        if (this.state.highestBet === this.state.currentBet) {
             this.socket.emit("raise", 0);
         }
     };
@@ -250,7 +250,7 @@ export default class extends Component<PokerProps, StartedState> {
                         </> :
                         <>
                             <CheckButton onClick={this.check}
-                                         disabled={this.state.highestBet === this.state.currentBet}>Check</CheckButton>
+                                         disabled={this.state.highestBet !== this.state.currentBet}>Check</CheckButton>
                             {this.tokens > this.state.highestBet ?
                                 <CallButton onClick={this.call}>Call</CallButton> :
                                 <CallButton onClick={this.allIn}>All in</CallButton>
