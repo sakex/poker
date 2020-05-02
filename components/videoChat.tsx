@@ -112,6 +112,7 @@ export class VideoChat extends Component<VideoProps, {}> {
         init_panic_hook();
         this.streaming = new Streaming(document.querySelector("#firstVideo"));
         this.streaming.not_managed();
+        this.streaming.set_dims(200, 200);
         this.feedSocket();
         this.props.renderProps(this.callRemote, this.setVideoPos);
         try {
