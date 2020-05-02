@@ -117,7 +117,7 @@ export class VideoChat extends Component<VideoProps, {}> {
         this.props.renderProps(this.callRemote, this.setVideoPos);
         try {
             await this.streaming.load_video();
-            this.streaming.set_video_pos("self", 450, 500);
+            this.streaming.set_video_pos("self", 360, 500);
         } catch (err) {
             console.log(err);
             alert("Couldn't load video");
