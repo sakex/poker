@@ -32,6 +32,7 @@ export class PokerGame {
     private cards: Card[] = [];
     private playerCards: Card[][] = [];
     private seats: [number, number][] = [];
+    private cardPos: [number, number][] = [];
     private timerPos: [number, number][] = [];
     private betsPos: [number, number][] = [];
     private midPos: [number, number][] = [];
@@ -84,14 +85,16 @@ export class PokerGame {
     };
 
     private setSeatsPos = () => {
-        const seats = [[700, 650], [0, 570], [0, 30], [500, 0], [1135, 30], [1135, 570]];
-        const timerPos = [[600, 460], [200, 410], [142, 360], [460, 230], [1135, 430], [1170, 470]];
-        const betsPos = [[625, 540], [225, 500], [167, 300], [485, 150], [1160, 350], [1195, 545]];
+        const seats = [[400, 650], [0, 570], [0, 30], [700, 0], [1135, 30], [1135, 570]];
+        const cardPos = [[700, 650], [250, 650], [0, 280], [500, 0], [1185, 280], [950, 670]];
+        const timerPos = [[600, 700], [200, 650], [0, 400], [460, 500], [1135, 650], [1170, 700]];
         const midPos = [[450, 330], [540, 330], [630, 330], [720, 330], [810, 330]];
-        const tokenPos = [[600, 600], [200, 560], [142, 250], [460, 100], [1135, 300], [1170, 600]];
+        const betsPos = [[625, 520], [295, 550], [237, 370], [585, 230], [1100, 370], [1045, 595]];
+        const tokenPos = [[600, 580], [270, 610], [212, 320], [560, 180], [1075, 320], [1020, 650]];
         const wScale = this.width / 1376;
         const hScale = this.height / 891;
         this.seats = seats.map((pair: number[]) => [pair[0] * wScale, pair[1] * hScale]);
+        this.cardPos = cardPos.map((pair: number[]) => [pair[0] * wScale, pair[1] * hScale]);
         this.timerPos = timerPos.map((pair: number[]) => [pair[0] * wScale, pair[1] * hScale]);
         this.betsPos = betsPos.map((pair: number[]) => [pair[0] * wScale, pair[1] * hScale]);
         this.midPos = midPos.map((pair: number[]) => [pair[0] * wScale, pair[1] * hScale]);
@@ -103,7 +106,7 @@ export class PokerGame {
     };
 
     public setState = (state: PokerState) => {
-        if(state.playerCards?.length) {
+        if (state.playerCards?.length) {
             this.playerCards = state.playerCards.map(cards => cards.map(card => new Card(...card)));
         }
         if (this.state.timerStart !== state.timerStart) {
@@ -173,16 +176,12 @@ export class PokerGame {
     };
 
     private drawCardBacks = (index: number, pos: number) => {
-        if(this.playerCards.length) {
-            if(index !== this.index && this.state.playing[index]){
-                const [x, y] = this.seats[pos];
+        if (index !== this.index && this.state.playing[index]) {
+            const [x, y] = this.cardPos[pos];
+            if (this.playerCards.length) {
                 this.playerCards[index][0].draw(x, y, 80, 120);
                 this.playerCards[index][1].draw(x + 70, y, 80, 120);
-            }
-        }
-        else {
-            if(index !== this.index && this.state.playing[index]){
-                const [x, y] = this.seats[pos];
+            } else {
                 this.backSprite.draw(x, y, 80, 120);
                 this.backSprite.draw(x + 70, y, 80, 120);
             }
@@ -201,9 +200,9 @@ export class PokerGame {
 
     private drawPot = () => {
         this.ctx.fillStyle = "black";
-        this.ctx.fillRect(this.width / 2 - 100, 200, 200, 50);
+        this.ctx.fillRect(this.width / 2 - 100, 217, 200, 50);
         this.ctx.fillStyle = "gold";
-        this.ctx.fillText(`$ ${this.state.pot}`, this.width / 2 - 90, 225);
+        this.ctx.fillText(`$ ${this.state.pot}`, this.width / 2 - 90, 242);
     }
 
     private drawTokens = (token: number, pos: number) => {
@@ -216,8 +215,8 @@ export class PokerGame {
 
     private drawOwnCards = () => {
         if (this.cards.length) {
-            this.cards[0].draw(this.seats[0][0], this.seats[0][1], 80, 120);
-            this.cards[1].draw(this.seats[0][0] + 70, this.seats[0][1], 80, 120);
+            this.cards[0].draw(this.cardPos[0][0], this.cardPos[0][1], 80, 120);
+            this.cards[1].draw(this.cardPos[0][0] + 70, this.cardPos[0][1], 80, 120);
         }
     }
 
