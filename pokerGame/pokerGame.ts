@@ -32,6 +32,7 @@ export class PokerGame {
     private cards: Card[] = [];
     private playerCards: Card[][] = [];
     private seats: [number, number][] = [];
+    private timerPos: [number, number][] = [];
     private betsPos: [number, number][] = [];
     private midPos: [number, number][] = [];
     private tokenPos: [number, number][] = [];
@@ -83,13 +84,15 @@ export class PokerGame {
     };
 
     private setSeatsPos = () => {
-        const seats = [[600, 650], [30, 520], [60, 30], [600, 0], [1135, 30], [1150, 600]];
+        const seats = [[700, 650], [0, 570], [0, 30], [500, 0], [1135, 30], [1135, 570]];
+        const timerPos = [[600, 460], [200, 410], [142, 360], [460, 230], [1135, 430], [1170, 470]];
         const betsPos = [[625, 540], [225, 500], [167, 300], [485, 150], [1160, 350], [1195, 545]];
         const midPos = [[450, 330], [540, 330], [630, 330], [720, 330], [810, 330]];
         const tokenPos = [[600, 600], [200, 560], [142, 250], [460, 100], [1135, 300], [1170, 600]];
         const wScale = this.width / 1376;
         const hScale = this.height / 891;
         this.seats = seats.map((pair: number[]) => [pair[0] * wScale, pair[1] * hScale]);
+        this.timerPos = timerPos.map((pair: number[]) => [pair[0] * wScale, pair[1] * hScale]);
         this.betsPos = betsPos.map((pair: number[]) => [pair[0] * wScale, pair[1] * hScale]);
         this.midPos = midPos.map((pair: number[]) => [pair[0] * wScale, pair[1] * hScale]);
         this.tokenPos = tokenPos.map((pair: number[]) => [pair[0] * wScale, pair[1] * hScale]);
@@ -122,7 +125,7 @@ export class PokerGame {
         if (start && end && this.seats.length) {
             const index = this.state.currentPlayer;
             const pos = index >= this.index ? (index - this.index) : (6 - this.index + index);
-            const [x, y] = this.seats[pos];
+            const [x, y] = this.timerPos[pos];
             this.timeBar = new TimeBar(start, end, x, y, this.ctx);
         }
     };
