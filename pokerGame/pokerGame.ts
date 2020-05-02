@@ -1,7 +1,7 @@
 import {Card} from "./card";
 import {TableData} from "@components/lobby";
 import {TimeBar} from "./timeBar";
-import {GenericSprite, Sprite} from "./sprite";
+import {GenericSprite} from "./sprite";
 
 export interface PokerState {
     index: number,
